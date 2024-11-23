@@ -1,0 +1,15 @@
+.some {
+    color:red
+}
+
+/* p{
+    color: green;
+} */
+
+.postsWrapper p{
+    color: green;
+}
+
+/* .postsWrapper :global(p){
+    color: green;
+} */

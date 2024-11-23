@@ -1,0 +1,9 @@
+.headerMain{
+    border: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+}
+.active{
+    color: blue;
+    font-weight: bold;
+}
