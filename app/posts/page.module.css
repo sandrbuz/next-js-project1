@@ -13,3 +13,15 @@
 /* .postsWrapper :global(p){
     color: green;
 } */
+
+
+.left, .right{
+    background-color: grey;
+    height: 100px;
+}
+
+.layout{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
