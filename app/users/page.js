@@ -1,4 +1,4 @@
-
+import Link from "next/link";
 
 export const metadata = {
     title: "Users", 
@@ -17,7 +17,7 @@ const UsersPage = async () => {
         <>
             <div>Users:</div>
             {users.map((user)=>{
-              return <div key={user.name}>{user.name}</div>
+              return <Link href={`/users/${user.id}`} key={user.name}>{user.name}</Link>
             })}
         </>
     )
