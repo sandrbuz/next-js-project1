@@ -1,3 +1,5 @@
+
+
 export const metadata = {
     title: "Users", 
     description: "This is the contacts page", 
@@ -8,13 +10,15 @@ export const metadata = {
 
 const UsersPage = async () => {
 
-  const response = await fetch(`https://jsonplaceholder.typicode.com/users`);
-  const contacts = await response.json();
+  const response = await fetch(`https://jsonplaceholder.typicode.com/users`, { cache: "no-store" });
+  const users = await response.json();
 
     return (
         <>
-         {console.log(contacts)}
-            <div>Users</div>
+            <div>Users:</div>
+            {users.map((user)=>{
+              return <div key={user.name}>{user.name}</div>
+            })}
         </>
     )
 }
