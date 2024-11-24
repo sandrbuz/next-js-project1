@@ -1,17 +1,27 @@
-export const metadata = {
-    title: "Posts", // Уникальное имя страницы для вкладки браузера
-    description: "This is the posts page", // Описание страницы
-  };
+"use client";
 
-
-import styles from "./page.module.css"
 import Link from "next/link";
-
+import { usePosts } from "./PostsContext";
 
 export default function PostsPage() {
-    return (
-        <div className={styles.postsWrapper}>
-            <div className={styles.some}>Posts</div>
-        </div>
-    )
+  const { posts } = usePosts();
+
+  return (
+    <div>
+      <h2>Posts:</h2>
+      {posts.length === 0 ? (
+        <p>Loading posts...</p>
+      ) : (
+        <ul>
+          {posts.map((post) => (
+            <li key={post.id}>
+              <Link href={`/posts/${post.id}`}>
+                {post.title}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
 }
