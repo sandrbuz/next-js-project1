@@ -15,9 +15,9 @@ export default function Home() {
       {/* <Head>
         <title>Home</title>
       </Head> */}
-      <div>
+      <h1>
         Home page
-      </div>
+      </h1>
       <Image src={image} alt="Image 1" width="250" height="250" placeholder="blur" />
       <Image src="/image1.jpeg" alt="Image 2" width="250" height="250"/>
     </div>

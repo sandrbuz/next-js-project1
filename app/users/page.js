@@ -15,7 +15,7 @@ const UsersPage = async () => {
 
     return (
         <>
-            <div>Users:</div>
+            <h1>Users:</h1>
             {users.map((user)=>{
               return <Link href={`/users/${user.id}`} key={user.name}>{user.name}</Link>
             })}

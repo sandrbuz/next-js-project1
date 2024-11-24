@@ -8,7 +8,8 @@ import { usePathname } from "next/navigation"
 const navigation = [
     { id: 1, href: "/", title: "To home" },
     { id: 2, href: "/users", title: "To users" },
-    { id: 3, href: "/posts", title: "To posts" }
+    { id: 3, href: "/posts", title: "To posts" },
+    { id: 4, href: "/albums", title: "To albums" }
 ]
 
 export default function Header() {
