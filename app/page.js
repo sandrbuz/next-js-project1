@@ -18,7 +18,7 @@ export default function Home() {
       <h1>
         Home page
       </h1>
-      <Image src={image} alt="Image 1" width="250" height="250" placeholder="blur" />
+      <Image title={"with blur"} src={image} alt="Image 1" width="250" height="250" placeholder="blur" />
       <Image src="/image1.jpeg" alt="Image 2" width="250" height="250"/>
     </div>
   );
