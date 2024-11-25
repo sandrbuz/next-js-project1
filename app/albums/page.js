@@ -22,7 +22,7 @@ import { useCustomStoreContext } from "@/customContextStore/CustomContextStore";
            <h1>Albums page</h1>
            <div>{counter}</div>
            <button onClick={handleIncrease}>Plus</button>
-           <button onClick={setCounter}>Minus</button>
+           <button onClick={() => setCounter((counter) => counter - 1)}>Minus</button>
         </>
     )
 }
