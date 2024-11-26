@@ -9,7 +9,8 @@ const navigation = [
     { id: 1, href: "/", title: "To home" },
     { id: 2, href: "/users", title: "To users" },
     { id: 3, href: "/posts", title: "To posts" },
-    { id: 4, href: "/albums", title: "To albums" }
+    { id: 4, href: "/albums", title: "To albums" },
+    { id: 4, href: "/reduxCounter", title: "To reduxCounter" }
 ]
 
 export default function Header() {
