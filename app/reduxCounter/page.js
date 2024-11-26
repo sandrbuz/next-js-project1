@@ -2,7 +2,7 @@
 
 
 import { useSelector, useDispatch } from "react-redux";
-import { increment, decrement } from "@/store/redux-store/counterSlice";
+import { increment, decrement } from "@/store/counterSlice";
 
 
 

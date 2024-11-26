@@ -1,4 +1,4 @@
-import { CustomStoreProvider } from "@/store/customContextStore/CustomContextStore";
+import { CustomStoreProvider } from "@/app/albums/CustomContextStore";
 
 export default function AlbumsLayout({ children }) {
     return (
