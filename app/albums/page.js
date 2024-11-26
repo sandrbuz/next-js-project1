@@ -1,7 +1,7 @@
 "use client"
 
 import withHOC from "../../hoc/withHOC";
-import { useCustomStoreContext } from "@/customContextStore/CustomContextStore";
+import { useCustomStoreContext } from "@/store/customContextStore/CustomContextStore";
 
 
 // export const metadata = {
@@ -20,7 +20,7 @@ import { useCustomStoreContext } from "@/customContextStore/CustomContextStore";
     return (
         <>
            <h1>Albums page</h1>
-           <div>{counter}</div>
+           <div>Global-custom-context-store-counter:<b>{counter}</b></div>
            <button onClick={handleIncrease}>Plus</button>
            <button onClick={() => setCounter((counter) => counter - 1)}>Minus</button>
         </>
