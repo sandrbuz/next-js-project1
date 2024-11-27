@@ -1,0 +1,16 @@
+.layout{
+    display: flex;
+}
+.links{
+    display: flex;
+    flex-direction: column;
+}
+.chat{
+    margin-left: 100px;
+    border: 1px solid black;
+}
+
+.active{
+   color: gold;
+   font-weight: bold;
+}

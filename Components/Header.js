@@ -10,7 +10,8 @@ const navigation = [
     { id: 2, href: "/users", title: "To users" },
     { id: 3, href: "/posts", title: "To posts" },
     { id: 4, href: "/albums", title: "To albums" },
-    { id: 4, href: "/reduxCounter", title: "To reduxCounter" }
+    { id: 4, href: "/reduxCounter", title: "To reduxCounter" },
+    { id: 5, href: "/dialogs/1", title: "To dialogs" },
 ]
 
 export default function Header() {

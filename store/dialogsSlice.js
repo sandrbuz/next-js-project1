@@ -57,14 +57,12 @@ export const dialogsSlice = createSlice({
     }
   },
   reducers: {
-    increment: (state) => {
-      state.value += 1;
-    },
-    decrement: (state) => {
-      state.value -= 1;
+    addMsg: (state,action) => {
+      const newId = state.messages.Dima.length + 1
+      const newMessage = { message: action.payload, whoseMess: "s.right", id: newId, key: newId}
+      state.messages.Dima.push(newMessage)
     },
   },
 });
 
-// Экспортируем экшены
-// export const { increment, decrement } = counterSlice.actions;
+export const { addMsg } = dialogsSlice.actions;
