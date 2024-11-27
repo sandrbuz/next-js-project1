@@ -58,9 +58,11 @@ export const dialogsSlice = createSlice({
   },
   reducers: {
     addMsg: (state,action) => {
-      const newId = state.messages.Dima.length + 1
-      const newMessage = { message: action.payload, whoseMess: "s.right", id: newId, key: newId}
-      state.messages.Dima.push(newMessage)
+      const { chatName, message } = action.payload;
+      const newId = state.messages[chatName].length + 1
+      const newMessage = { message: message, whoseMess: "s.right", id: newId, key: newId}
+      state.messages[chatName].push(newMessage)
+      //console.log(JSON.stringify(state.messages, null, 2)); //show all state
     },
   },
 });

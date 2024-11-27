@@ -4,12 +4,6 @@ import styles from "./page.module.css";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-// const navigation = [
-//     { id: 1, href: "/dialogs/1", title: "Dima" },
-//     { id: 2, href: "/dialogs/2", title: "Andrey" },
-//     { id: 3, href: "/dialogs/3", title: "Sveta" },
-//     { id: 4, href: "/dialogs/4", title: "Sasha" },
-// ]
 
 
 export default function PostsLayout({ children }) {
