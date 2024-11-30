@@ -8,7 +8,7 @@ export default function DashboardTemplate({ children }) {
 
 
     useEffect(()=>{
-        console.log("template use effect every time on routing")
+        console.log("template use effect every time on routing (layout.js 1 time)")
      },[])
 
 

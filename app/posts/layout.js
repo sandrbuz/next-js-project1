@@ -9,7 +9,7 @@ export default function PostsLayout({ children }) {
   
 
     useEffect(()=>{
-       console.log("layout use effect 1 time on routing")
+       console.log("layout use effect 1 time on routing (template.js every time)")
     },[])
 
 

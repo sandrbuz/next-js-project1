@@ -1,4 +1,4 @@
-import Link from "next/link";
+import UsersPage from "./UsersPage";
 
 export const metadata = {
     title: "Users", 
@@ -8,23 +8,19 @@ export const metadata = {
 
 
 
-const UsersPage = async () => {
+const UsersPageContainer = async () => {
 
   const response = await fetch(`https://jsonplaceholder.typicode.com/users`, { cache: "no-store" });
   const users = await response.json();
 
     return (
         <>
-            <h1>Users:</h1>
-            <p>SSR dynamic routing</p>
-            {users.map((user)=>{
-              return <Link href={`/users/${user.id}`} key={user.name}>{user.name}</Link>
-            })}
+           <UsersPage users={users}/>
         </>
     )
 }
 
-export default UsersPage;
+export default UsersPageContainer;
 
 
 
