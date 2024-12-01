@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePosts } from "./PostsContext";
 
 export default function PostsPage() {
-  const { posts } = usePosts();
+  const { poss } = usePosts();
 
   return (
     <div>
