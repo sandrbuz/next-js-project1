@@ -1,28 +1,16 @@
-"use client";
+import PostsComponent from "./PostsComponent";
 
-import Link from "next/link";
-import { usePosts } from "./PostsContext";
+export const metadata = {
+  title: "Posts", 
+  description: "This is the posts page", 
+};
 
 export default function PostsPage() {
-  const { posts } = usePosts();
+  
 
   return (
     <div>
-      <h2>Posts:</h2>
-      <p>client routing (local context)</p>
-      {posts.length === 0 ? (
-        <p>Loading posts...</p>
-      ) : (
-        <ul>
-          {posts.map((post) => (
-            <li key={post.id}>
-              <Link href={`/posts/${post.id}`}>
-                {post.title}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
+      <PostsComponent/>
     </div>
   );
 }
