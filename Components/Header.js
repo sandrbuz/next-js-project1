@@ -12,6 +12,7 @@ const navigation = [
     { id: 4, href: "/albums", title: "To albums" },
     { id: 4, href: "/reduxCounter", title: "To reduxCounter" },
     { id: 5, href: "/dialogs/1", title: "To dialogs" },
+    { id: 5, href: "/contacts", title: "To contacts" }
 ]
 
 export default function Header() {
