@@ -13,6 +13,10 @@ const UsersPageContainer = async () => {
   const response = await fetch(`https://jsonplaceholder.typicode.com/users`, { cache: "no-store" });
   const users = await response.json();
 
+  // if (!response.ok) {
+  //   return 'There was an error.'
+  // }
+
     return (
         <>
            <UsersPage users={users}/>
