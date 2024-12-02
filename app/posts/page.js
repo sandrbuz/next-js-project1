@@ -5,7 +5,7 @@ export const metadata = {
   description: "This is the posts page", 
 };
 
-export default function PostsPage() {
+export default function PostsContainerPage() {
   
 
   return (
