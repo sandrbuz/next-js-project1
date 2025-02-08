@@ -1,7 +1,7 @@
 
 const Drag = () => {
   return (
-    <div>updated in main</div>
+    <div>updated in main1</div>
   )
 }
 
