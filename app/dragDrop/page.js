@@ -1,7 +1,7 @@
 
 const Drag = () => {
   return (
-    <div>added in drag</div>
+    <div>added in drop</div>
   )
 }
 
