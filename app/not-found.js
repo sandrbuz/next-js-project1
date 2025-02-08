@@ -8,9 +8,9 @@ export default function NotFound() {
 
   useEffect(() => {
     document.title = "404 error";
-    setTimeout(() => {
-      redirect('/')
-    }, 3000)
+    // setTimeout(() => {
+    //   redirect('/')
+    // }, 3000)
   }, [])
 
 

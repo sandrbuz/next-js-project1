@@ -10,9 +10,7 @@ export default function PostsComponent() {
     <div>
       <h2>Posts:</h2>
       <p>client routing (local context)</p>
-      {posts.length === 0 ? (
-        <p>Loading posts...</p>
-      ) : (
+      
         <ul>
           {posts.map((post) => (
             <li key={post.id}>
@@ -22,7 +20,7 @@ export default function PostsComponent() {
             </li>
           ))}
         </ul>
-      )}
+      
     </div>
   );
 }
