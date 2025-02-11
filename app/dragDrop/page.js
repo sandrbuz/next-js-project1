@@ -1,14 +1,12 @@
-
-
-'use client'
-import { DndContext, closestCenter } from '@dnd-kit/core';
+'use client';
+import { DndContext, closestCenter, DragOverlay } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy, arrayMove, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { useState } from 'react';
 
 // Компонент перетаскиваемого элемента (красный блок)
 function SortableItem({ id }) {
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
 
   const style = {
     border: '2px solid red',
@@ -18,6 +16,7 @@ function SortableItem({ id }) {
     transform: CSS.Transform.toString(transform),
     transition,
     cursor: 'grab',
+    opacity: isDragging ? 0.5 : 1,
   };
 
   return (
@@ -39,6 +38,7 @@ function SortableBlueContainer({ id, children }) {
     transform: CSS.Transform.toString(transform),
     transition,
     cursor: 'grab',
+    minHeight: '50px',
   };
 
   return (
@@ -52,56 +52,72 @@ export default function DragDropPage() {
   const [blueBlocks, setBlueBlocks] = useState([
     { id: 'blue-1', redBlocks: ['red-1', 'red-2'] },
     { id: 'blue-2', redBlocks: ['red-3'] },
-    { id: 'blue-3', redBlocks: [] }
+    { id: 'blue-3', redBlocks: [] },
   ]);
 
+  const [activeItem, setActiveItem] = useState(null);
+
+  const handleDragStart = (event) => {
+    setActiveItem(event.active.id);
+  };
+
   const handleDragEnd = (event) => {
+    setActiveItem(null);
     const { active, over } = event;
     if (!over) return;
 
     const activeId = active.id;
     const overId = over.id;
 
-    // Перемещение синих блоков
-    const blueIndexFrom = blueBlocks.findIndex(b => b.id === activeId);
-    const blueIndexTo = blueBlocks.findIndex(b => b.id === overId);
+    // Перемещение красных блоков внутри одного синего блока
+    const sourceBlue = blueBlocks.find((b) => b.redBlocks.includes(activeId));
+    const targetBlue = blueBlocks.find((b) => b.id === overId || b.redBlocks.includes(overId));
 
-    if (blueIndexFrom !== -1 && blueIndexTo !== -1) {
-      setBlueBlocks((prev) => arrayMove(prev, blueIndexFrom, blueIndexTo));
+    if (sourceBlue && targetBlue && sourceBlue.id === targetBlue.id) {
+      setBlueBlocks((prev) => {
+        const newState = prev.map((b) => ({ ...b, redBlocks: [...b.redBlocks] }));
+        const blueIndex = newState.findIndex((b) => b.id === sourceBlue.id);
+
+        const oldIndex = newState[blueIndex].redBlocks.indexOf(activeId);
+        const newIndex = newState[blueIndex].redBlocks.indexOf(overId);
+
+        newState[blueIndex].redBlocks = arrayMove(newState[blueIndex].redBlocks, oldIndex, newIndex);
+        return newState;
+      });
       return;
     }
 
-    // Перемещение красных блоков между синими блоками
-    let sourceBlue = blueBlocks.find(b => b.redBlocks.includes(activeId));
-    let targetBlue = blueBlocks.find(b => b.id === overId || b.redBlocks.includes(overId));
-
+    // Перемещение красного блока между синими контейнерами
     if (sourceBlue && targetBlue) {
       setBlueBlocks((prev) => {
-        const newState = prev.map(b => ({ ...b, redBlocks: [...b.redBlocks] }));
-        const sourceIndex = newState.findIndex(b => b.id === sourceBlue.id);
-        const targetIndex = newState.findIndex(b => b.id === targetBlue.id);
-        
-        newState[sourceIndex].redBlocks = newState[sourceIndex].redBlocks.filter(id => id !== activeId);
+        const newState = prev.map((b) => ({ ...b, redBlocks: [...b.redBlocks] }));
+        const sourceIndex = newState.findIndex((b) => b.id === sourceBlue.id);
+        const targetIndex = newState.findIndex((b) => b.id === targetBlue.id);
+
+        newState[sourceIndex].redBlocks = newState[sourceIndex].redBlocks.filter((id) => id !== activeId);
         newState[targetIndex].redBlocks.push(activeId);
 
         return newState;
       });
+      return;
     }
   };
 
   return (
-    <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-      <SortableContext items={blueBlocks.map(b => b.id)} strategy={verticalListSortingStrategy}>
+    <DndContext collisionDetection={closestCenter} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+      <SortableContext items={blueBlocks.map((b) => b.id)} strategy={verticalListSortingStrategy}>
         {blueBlocks.map((blue) => (
           <SortableBlueContainer key={blue.id} id={blue.id}>
             <SortableContext items={blue.redBlocks} strategy={verticalListSortingStrategy}>
-              {blue.redBlocks.map(redId => (
+              {blue.redBlocks.map((redId) => (
                 <SortableItem key={redId} id={redId} />
               ))}
             </SortableContext>
           </SortableBlueContainer>
         ))}
       </SortableContext>
+
+      <DragOverlay>{activeItem ? <SortableItem id={activeItem} /> : null}</DragOverlay>
     </DndContext>
   );
 }
