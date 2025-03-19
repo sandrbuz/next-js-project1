@@ -14,6 +14,7 @@ const navigation = [
     { id: 5, href: "/dialogs/1", title: "To dialogs" },
     { id: 5, href: "/contacts", title: "To contacts" },
     { id: 6, href: "/dragDrop", title: "Входные усл." },
+    { id: 6, href: "/processesDrag", title: "Процессы" },
 ]
 
 export default function Header() {

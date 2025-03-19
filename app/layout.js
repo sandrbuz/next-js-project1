@@ -7,6 +7,7 @@ import Footer from "../Components/Footer";
 import ClientProvider from "@/store/ClientStoreProvider";
 import { Provider } from "react-redux";
 import store from "@/store/redux-store";
+import './globals.css'
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
