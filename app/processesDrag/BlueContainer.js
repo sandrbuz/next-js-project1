@@ -1,23 +1,21 @@
-'use client'
+'use client';
 
 import { useDroppable } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import RedBlock from './RedBlock.js';
 
-const BlueContainer = ({ block }) => {
-  const { isOver, setNodeRef } = useDroppable({
-    id: block.id, 
+export default function BlueContainer({ block }) {
+  const { setNodeRef } = useDroppable({
+    id: block.id,
   });
-
-  const style = {
-    backgroundColor: isOver ? '#3b82f680' : '#3b82f6',
-  };
 
   return (
     <div
       ref={setNodeRef}
-      style={style}
-      className="my-10 p-4 min-h-[200px] flex flex-col gap-5"
+      style={{
+        backgroundColor: '#3b82f6', // статичный цвет, без подсветки
+      }}
+      className="my-10 p-4 min-h-[50px] flex flex-col gap-5"
     >
       <SortableContext
         id={block.id}
@@ -31,5 +29,3 @@ const BlueContainer = ({ block }) => {
     </div>
   );
 }
-
-export default BlueContainer;

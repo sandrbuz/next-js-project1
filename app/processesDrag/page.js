@@ -1,11 +1,15 @@
-'use client'
+'use client';
 
-import { DndContext, DragOverlay, closestCenter } from '@dnd-kit/core';
-import BlueContainer from './BlueContainer.js';
+import {
+  DndContext,
+  DragOverlay,
+  closestCorners, // или rectIntersection
+} from '@dnd-kit/core';
 import { useState } from 'react';
 import { arrayMove } from '@dnd-kit/sortable';
+import BlueContainer from './BlueContainer.js';
 
-const Processes = () => {
+export default function Processes() {
   const [blueBlocks, setBlueBlocks] = useState([
     {
       id: 'blue1',
@@ -34,36 +38,39 @@ const Processes = () => {
     },
   ]);
 
-  // Сохраняем объект перетаскиваемого красного блока
+  // Сохраняем объект «активного» красного блока, чтобы отрисовать в DragOverlay
   const [activeRed, setActiveRed] = useState(null);
 
+  // При начале перетаскивания ищем красный блок по ID
   const handleDragStart = (event) => {
-    const activeId = event.active.id;
-    // Ищем красный блок по id (предполагается, что id синего начинаются с "blue", а красного – с "red")
+    const { active } = event;
+    const activeId = active.id;
+
     let found = null;
     for (let blue of blueBlocks) {
-      found = blue.redBlocks.find(red => red.id === activeId);
+      found = blue.redBlocks.find((red) => red.id === activeId);
       if (found) break;
     }
     setActiveRed(found);
   };
 
-  const handleDragEnd = ({ active, over }) => {
+  // Когда отпускаем элемент
+  const handleDragEnd = (event) => {
     setActiveRed(null);
-    if (!over) return;
-    const activeId = active.id;
-    const overId = over.id;
+    if (!event.over) return;
+    const activeId = event.active.id;
+    const overId = event.over.id;
     if (activeId === overId) return;
-
+  
     setBlueBlocks((prev) => {
       const newState = structuredClone(prev);
-
+  
       // Находим исходный контейнер и индекс красного блока
       let sourceBlockIndex = -1;
       let activeItemIndex = -1;
       let activeItem = null;
       for (let i = 0; i < newState.length; i++) {
-        const index = newState[i].redBlocks.findIndex(item => item.id === activeId);
+        const index = newState[i].redBlocks.findIndex((item) => item.id === activeId);
         if (index !== -1) {
           sourceBlockIndex = i;
           activeItemIndex = index;
@@ -72,48 +79,63 @@ const Processes = () => {
         }
       }
       if (!activeItem) return prev;
-
-      // Ищем контейнер, в котором находится over.id
+  
+      // Ищем контейнер, в котором находится over.id (либо красный блок, либо сам синий контейнер)
       let destinationBlockIndex = -1;
       let overItemIndex = null;
       for (let i = 0; i < newState.length; i++) {
-        const index = newState[i].redBlocks.findIndex(item => item.id === overId);
+        const index = newState[i].redBlocks.findIndex((item) => item.id === overId);
         if (index !== -1) {
           destinationBlockIndex = i;
           overItemIndex = index;
           break;
         }
       }
-
-      // Если over.id соответствует id синего контейнера (drop на пустой области)
+  
+      // Если over.id соответствует id синего контейнера (drop на пустую область)
       if (destinationBlockIndex === -1) {
-        destinationBlockIndex = newState.findIndex(block => block.id === overId);
+        destinationBlockIndex = newState.findIndex((block) => block.id === overId);
         if (destinationBlockIndex === -1) return prev;
         newState[sourceBlockIndex].redBlocks.splice(activeItemIndex, 1);
         newState[destinationBlockIndex].redBlocks.push(activeItem);
         return newState;
       }
-
+  
       // Если перетаскивание внутри одного контейнера – используем arrayMove
       if (sourceBlockIndex === destinationBlockIndex) {
         const items = newState[sourceBlockIndex].redBlocks;
-        const oldIndex = items.findIndex(item => item.id === activeId);
-        const newIndex = items.findIndex(item => item.id === overId);
+        const oldIndex = items.findIndex((item) => item.id === activeId);
+        const newIndex = items.findIndex((item) => item.id === overId);
         newState[sourceBlockIndex].redBlocks = arrayMove(items, oldIndex, newIndex);
         return newState;
       }
-
+  
       // Перемещение между контейнерами:
+      // Удаляем элемент из исходного контейнера
       newState[sourceBlockIndex].redBlocks.splice(activeItemIndex, 1);
-      newState[destinationBlockIndex].redBlocks.splice(overItemIndex, 0, activeItem);
+  
+      // Определяем индекс вставки в целевом контейнере:
+      // Если курсор ниже центра over-элемента, вставляем после него.
+      let insertionIndex = overItemIndex;
+      if (event.activatorEvent && event.over.rect) {
+        const pointerY = event.activatorEvent.clientY;
+        const { top, height } = event.over.rect;
+        const midpoint = top + height / 2;
+        if (pointerY > midpoint) {
+          insertionIndex = overItemIndex + 1;
+        }
+      }
+  
+      newState[destinationBlockIndex].redBlocks.splice(insertionIndex, 0, activeItem);
       return newState;
     });
   };
+  
 
   return (
-    <DndContext 
-      collisionDetection={closestCenter} 
-      onDragStart={handleDragStart} 
+    <DndContext
+      collisionDetection={closestCorners} // или rectIntersection
+      onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
       <div className="min-h-[calc(100vh-52px)] p-10 overflow-y-auto">
@@ -121,12 +143,13 @@ const Processes = () => {
           <BlueContainer key={blueBlock.id} block={blueBlock} />
         ))}
       </div>
+
       <DragOverlay>
         {activeRed ? (
-          <div 
-            style={{ 
-              minHeight: '40px', 
-              backgroundColor: '#f87171', 
+          <div
+            style={{
+              minHeight: '40px',
+              backgroundColor: '#f87171',
               padding: '5px',
               border: '1px solid #dc2626',
             }}
@@ -138,5 +161,3 @@ const Processes = () => {
     </DndContext>
   );
 }
-
-export default Processes;
