@@ -5,16 +5,11 @@ import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import RedBlock from './RedBlock.js';
 
 export default function BlueContainer({ block }) {
-  const { setNodeRef } = useDroppable({
-    id: block.id,
-  });
-
+  const { setNodeRef } = useDroppable({ id: block.id });
   return (
     <div
       ref={setNodeRef}
-      style={{
-        backgroundColor: '#3b82f6', // статичный цвет, без подсветки
-      }}
+      style={{ backgroundColor: '#3b82f6' }}
       className="my-10 p-4 min-h-[50px] flex flex-col gap-5"
     >
       <SortableContext

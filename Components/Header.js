@@ -13,8 +13,8 @@ const navigation = [
     { id: 4, href: "/reduxCounter", title: "To reduxCounter" },
     { id: 5, href: "/dialogs/1", title: "To dialogs" },
     { id: 5, href: "/contacts", title: "To contacts" },
-    { id: 6, href: "/dragDrop", title: "Входные усл." },
-    { id: 6, href: "/processesDrag", title: "Процессы" },
+    { id: 6, href: "/dragDrop", title: "Входные усл.DndKit" },
+    { id: 6, href: "/processesDragDndKit", title: "ПроцессыDndKit" },
 ]
 
 export default function Header() {

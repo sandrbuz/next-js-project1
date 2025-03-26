@@ -1,19 +1,15 @@
-'use client'
+'use client';
 
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
-const RedBlock = ({ red }) => {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
-    id: red.id,
-  });
-
+export default function RedBlock({ red }) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: red.id });
   const style = {
     opacity: isDragging ? 0.5 : 1,
     transform: CSS.Transform.toString(transform),
     transition,
   };
-
   return (
     <div
       ref={setNodeRef}
@@ -26,5 +22,3 @@ const RedBlock = ({ red }) => {
     </div>
   );
 }
-
-export default RedBlock;
