@@ -1,7 +1,10 @@
 .headerMain{
     border: 1px solid black;
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    flex-wrap: wrap;
+    gap: 0 80px;
+
 }
 .active{
     color: blue;
