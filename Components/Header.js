@@ -15,6 +15,7 @@ const navigation = [
     { id: 5, href: "/contacts", title: "To contacts" },
     { id: 6, href: "/dragDrop", title: "Входные усл.DndKit" },
     { id: 6, href: "/processesDragDndKit", title: "ПроцессыDndKit" },
+    { id: 6, href: "/testPage", title: "ТЕст" },
 ]
 
 export default function Header() {
