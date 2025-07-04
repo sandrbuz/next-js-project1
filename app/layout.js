@@ -1,13 +1,10 @@
-"use client"
+"use client";
 
 import localFont from "next/font/local";
 import "./globals.css";
-import Header from "../Components/Header";
-import Footer from "../Components/Footer";
-import ClientProvider from "@/store/ClientStoreProvider";
 import { Provider } from "react-redux";
 import store from "@/store/redux-store";
-import './globals.css'
+import MainLayout from "./components/MainLayout";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -29,15 +26,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        {/* <ClientProvider> */}
-
         <Provider store={store}>
-          <Header />
-          {children}
-          <Footer />
+          <MainLayout>{children}</MainLayout>
         </Provider>
-
-        {/* </ClientProvider> */}
       </body>
     </html>
   );
